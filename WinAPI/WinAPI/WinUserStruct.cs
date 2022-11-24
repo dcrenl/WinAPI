@@ -5,6 +5,10 @@ using System.Text;
 
 namespace WinAPI
 {
+    /// <summary>
+    /// dcrenl:2022-11-24 13:06:40
+    /// user32.dll使用到的struct
+    /// </summary>
     #region
 
     [StructLayout(LayoutKind.Sequential)]
