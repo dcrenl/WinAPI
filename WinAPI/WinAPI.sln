@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.4.33110.190
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WinAPI", "WinAPI\WinAPI.csproj", "{BCB3C294-F4BD-4270-A798-D79C89498400}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WinAPITest", "WinAPITest\WinAPITest.csproj", "{BCB3C294-F4BD-4270-A798-D79C89498400}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WinAPI", "WinAPI\WinAPI.csproj", "{6DE11DEF-D72A-4A2E-BE6C-06A278ADC739}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{BCB3C294-F4BD-4270-A798-D79C89498400}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BCB3C294-F4BD-4270-A798-D79C89498400}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BCB3C294-F4BD-4270-A798-D79C89498400}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6DE11DEF-D72A-4A2E-BE6C-06A278ADC739}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6DE11DEF-D72A-4A2E-BE6C-06A278ADC739}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6DE11DEF-D72A-4A2E-BE6C-06A278ADC739}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6DE11DEF-D72A-4A2E-BE6C-06A278ADC739}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
