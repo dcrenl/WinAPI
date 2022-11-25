@@ -27,5 +27,32 @@ namespace WinAPI
         public int bottom;
     }
 
+    [StructLayout(LayoutKind.Sequential)]
+    public struct PAINTSTRUCT
+    {
+        /// HDC->HDC__*
+        public IntPtr hdc;
+
+        /// BOOL->int
+        [MarshalAs(UnmanagedType.Bool)]
+        public bool fErase;
+
+        /// RECT->tagRECT
+        public RECT rcPaint;
+
+        /// BOOL->int
+        [MarshalAs(UnmanagedType.Bool)]
+        public bool fRestore;
+
+        /// BOOL->int
+        [MarshalAs(UnmanagedType.Bool)]
+        public bool fIncUpdate;
+
+        /// BYTE[32]
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = 32, ArraySubType = UnmanagedType.I1)]
+        public byte[] rgbReserved;
+    }
+
+
     #endregion
 }

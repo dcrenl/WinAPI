@@ -112,76 +112,146 @@ namespace WinAPI
         /// 如果线程不拥有窗口。 请注意，在这种情况下， AnimateWindow 失败，但 GetLastError 返回 ERROR_SUCCESS。
         /// </returns>
         [DllImport(_dllName, CharSet = CharSet.Auto)]
-        [return: MarshalAs(UnmanagedType.Bool)]       
+        [return: MarshalAs(UnmanagedType.Bool)]
         public static extern bool AnimateWindow(IntPtr hWnd, uint dwTime, AW dwFlags);
 
-        //TODO:dcrenl:2022-11-24 13:06:40以下所有方法未完成
-
         /// <summary>
+        /// dcrenl:2022-11-24 13:06:40
         /// 指示屏幕上是否存在拥有、可见、顶级弹出窗口或重叠窗口。 该函数将搜索整个屏幕，而不仅仅是调用应用程序的工作区。
+        /// 此函数仅用于与 16 位版本的 Windows 兼容。 它通常不有用。
+        /// https://learn.microsoft.com/zh-cn/windows/win32/api/winuser/nf-winuser-anypopup
         /// </summary>
+        /// <returns>如果弹出窗口存在，则返回值为非零，即使弹出窗口被其他窗口完全覆盖也是如此。</returns>
         [DllImport(_dllName, CharSet = CharSet.Auto)]
-        public static extern IntPtr AAnyPopup();
+        [return: MarshalAs(UnmanagedType.Bool)]
+        public static extern bool AAnyPopup();
 
         /// <summary>
+        /// dcrenl:2022-11-24 13:06:40
         /// 将新项追加到指定菜单栏的末尾、下拉菜单、子菜单或快捷菜单。 可以使用此函数指定菜单项的内容、外观和行为。 (ANSI)
+        /// https://learn.microsoft.com/zh-cn/windows/win32/api/winuser/nf-winuser-appendmenua
         /// </summary>
+        /// <param name="hMenu">要更改的菜单栏、下拉菜单、子菜单或快捷菜单的句柄。</param>
+        /// <param name="uFlags">控制新菜单项的外观和行为。</param>
+        /// <param name="uIDNewItem">新菜单项的标识符;如果 uFlags 参数设置为 MF_POPUP，则为下拉菜单或子菜单的句柄。</param>
+        /// <param name="lpNewItem">新菜单项的内容。 lpNewItem 的解释取决于 uFlags 参数</param>
+        /// <returns>如果该函数成功，则返回值为非零值。 如果函数失败，则返回值为零。</returns>
         [DllImport(_dllName, CharSet = CharSet.Auto)]
-        public static extern IntPtr AppendMenuA();
+        [return: MarshalAs(UnmanagedType.Bool)]
+        public static extern bool AppendMenuA(IntPtr hMenu, MF uFlags, [MarshalAs(UnmanagedType.SysUInt)] uint uIDNewItem, MF lpNewItem);
 
         /// <summary>
+        /// dcrenl:2022-11-24 13:06:40
         /// 将新项追加到指定菜单栏的末尾、下拉菜单、子菜单或快捷菜单。 可以使用此函数指定菜单项的内容、外观和行为。 (Unicode)
+        /// https://learn.microsoft.com/zh-cn/windows/win32/api/winuser/nf-winuser-appendmenuw
         /// </summary>
+        /// <param name="hMenu">要更改的菜单栏、下拉菜单、子菜单或快捷菜单的句柄。</param>
+        /// <param name="uFlags">控制新菜单项的外观和行为。</param>
+        /// <param name="uIDNewItem">新菜单项的标识符;如果 uFlags 参数设置为 MF_POPUP，则为下拉菜单或子菜单的句柄。</param>
+        /// <param name="lpNewItem">新菜单项的内容。 lpNewItem 的解释取决于 uFlags 参数</param>
+        /// <returns>如果该函数成功，则返回值为非零值。 如果函数失败，则返回值为零。</returns>
         [DllImport(_dllName, CharSet = CharSet.Auto)]
-        public static extern IntPtr AppendMenuW();
+        [return: MarshalAs(UnmanagedType.Bool)]
+        public static extern bool AppendMenuW(IntPtr hMenu, MF uFlags, [MarshalAs(UnmanagedType.SysUInt)] uint uIDNewItem, MF lpNewItem);
 
         /// <summary>
+        /// dcrenl:2022-11-24 13:06:40
         /// 确定两个DPI_AWARENESS_CONTEXT值是否相同。
+        /// https://learn.microsoft.com/zh-cn/windows/win32/api/winuser/nf-winuser-aredpiawarenesscontextsequal
         /// </summary>
+        /// <param name="dpiContextA"></param>
+        /// <param name="dpiContextB"></param>
+        /// <returns>如果值相等，则返回 TRUE ，否则返回 FALSE。</returns>
         [DllImport(_dllName, CharSet = CharSet.Auto)]
-        public static extern IntPtr AreDpiAwarenessContextsEqual();
+        [return: MarshalAs(UnmanagedType.Bool)]
+        public static extern bool AreDpiAwarenessContextsEqual(DPI_AWARENESS dpiContextA, DPI_AWARENESS dpiContextB);
 
         /// <summary>
+        /// dcrenl:2022-11-24 13:06:40
         /// 排列指定父窗口的所有最小化(标志性) 子窗口。
+        /// https://learn.microsoft.com/zh-cn/windows/win32/api/winuser/nf-winuser-arrangeiconicwindows
         /// </summary>
+        /// <param name="hWnd">父窗口的句柄。</param>
+        /// <returns>如果函数成功，则返回值是一行图标的高度。如果函数失败，则返回值为零。</returns>
         [DllImport(_dllName, CharSet = CharSet.Auto)]
-        public static extern IntPtr ArrangeIconicWindows();
+        public static extern uint ArrangeIconicWindows(IntPtr hWnd);
 
         /// <summary>
+        /// dcrenl:2022-11-24 13:06:40
         /// 将一个线程的输入处理机制附加到另一个线程的输入处理机制。
+        /// https://learn.microsoft.com/zh-cn/windows/win32/api/winuser/nf-winuser-attachthreadinput
         /// </summary>
+        /// <param name="idAttach">要附加到另一个线程的线程的标识符。 要附加的线程不能是系统线程。</param>
+        /// <param name="idAttachTo">idAttach 将附加到的线程的标识符。 此线程不能是系统线程。线程无法附加到自身。 因此， idAttachTo 不能等于 idAttach。</param>
+        /// <param name="fAttach">如果此参数为 TRUE，则附加两个线程。 如果参数为 FALSE，则分离线程。</param>
+        /// <returns>如果此参数为 TRUE，则附加两个线程。 如果参数为 FALSE，则分离线程。</returns>
         [DllImport(_dllName, CharSet = CharSet.Auto)]
-        public static extern IntPtr AttachThreadInput();
+        [return: MarshalAs(UnmanagedType.Bool)]
+        public static extern bool AttachThreadInput(uint idAttach, uint idAttachTo, [MarshalAs(UnmanagedType.Bool)] bool fAttach);
 
         /// <summary>
+        /// dcrenl:2022-11-24 13:06:40
         /// 为多窗口位置结构分配内存，并将句柄返回到结构。
+        /// https://learn.microsoft.com/zh-cn/windows/win32/api/winuser/nf-winuser-begindeferwindowpos
         /// </summary>
+        /// <param name="nNumWindows">要为其存储位置信息的窗口的初始数目。 如果需要，DeferWindowPos 函数会增加结构的大小。</param>
+        /// <returns>如果函数成功，则返回值将标识多窗口位置结构。 如果系统资源不足而无法分配结构，则返回值为 NULL。</returns>
         [DllImport(_dllName, CharSet = CharSet.Auto)]
-        public static extern IntPtr BeginDeferWindowPos();
+        public static extern IntPtr BeginDeferWindowPos(int nNumWindows);
 
         /// <summary>
+        /// dcrenl:2022-11-24 13:06:40
         /// BeginPaint 函数准备用于绘制的指定窗口，并使用有关绘图的信息填充 PAINTSTRUCT 结构。
+        /// https://learn.microsoft.com/zh-cn/windows/win32/api/winuser/nf-winuser-beginpaint
         /// </summary>
+        /// <param name="hWnd">要重新绘制的窗口的句柄。</param>
+        /// <param name="lpPaint">指向将接收绘画信息的 PAINTSTRUCT 结构的指针。</param>
+        /// <returns>如果函数成功，则返回值是指定窗口的显示设备上下文的句柄。如果函数失败，则返回值为 NULL，指示没有显示设备上下文可用。</returns>
         [DllImport(_dllName, CharSet = CharSet.Auto)]
-        public static extern IntPtr BeginPaint();
+        public static extern IntPtr BeginPaint(IntPtr hWnd, out PAINTSTRUCT lpPaint);
 
         /// <summary>
+        /// dcrenl:2022-11-24 13:06:40
         /// 阻止键盘和鼠标输入事件到达应用程序。
+        /// https://learn.microsoft.com/zh-cn/windows/win32/api/winuser/nf-winuser-blockinput
         /// </summary>
+        /// <param name="fBlockIt">函数的用途。 如果此参数为 TRUE，则阻止键盘和鼠标输入事件。 
+        /// 如果此参数为 FALSE，则取消阻止键盘和鼠标事件。 请注意，只有阻止输入的线程才能成功取消阻止输入。</param>
+        /// <returns>如果该函数成功，则返回值为非零值。如果输入已被阻止，则返回值为零。</returns>
         [DllImport(_dllName, CharSet = CharSet.Auto)]
-        public static extern IntPtr BlockInput();
+        public static extern IntPtr BlockInput([MarshalAs(UnmanagedType.Bool)] bool fBlockIt);
 
         /// <summary>
+        /// dcrenl:2022-11-25 10:14:00
         /// 将指定的窗口置于 Z 顺序的顶部。 如果窗口是顶级窗口，则会激活该窗口。 如果窗口是子窗口，则会激活与子窗口关联的顶级父窗口。
+        /// https://learn.microsoft.com/zh-cn/windows/win32/api/winuser/nf-winuser-bringwindowtotop
         /// </summary>
+        /// <param name="hWnd">要置于 Z 顺序顶部的窗口的句柄。</param>
+        /// <returns>如果该函数成功，则返回值为非零值。如果函数失败，则返回值为零。</returns>
         [DllImport(_dllName, CharSet = CharSet.Auto)]
-        public static extern IntPtr BringWindowToTop();
+        [return: MarshalAs(UnmanagedType.Bool)]
+        public static extern bool BringWindowToTop([In] IntPtr hWnd);
 
         /// <summary>
+        /// dcrenl:2022:11:25 10:19:53
         /// 将邮件发送到指定的收件人。 (BroadcastSystemMessageW)
+        /// 向指定收件人发送邮件。 收件人可以是应用程序、可安装驱动程序、网络驱动程序、系统级设备驱动程序或这些系统组件的任何组合。
+        /// 若要在定义请求时接收其他信息，请使用 BroadcastSystemMessageEx 函数。
+        /// https://learn.microsoft.com/zh-cn/windows/win32/api/winuser/nf-winuser-broadcastsystemmessage
         /// </summary>
+        /// <param name="flags">广播选项。</param>
+        /// <param name="lpInfo">指向包含和接收有关邮件收件人信息的变量的指针。
+        /// 当函数返回时，此变量将接收这些值的组合，这些值标识哪些收件人实际接收了邮件。
+        /// 如果此参数为 NULL，则该函数将广播到所有组件。</param>
+        /// <param name="Msg">要发送的消息。 有关系统提供的消息的列表，请参阅 系统定义的消息。</param>
+        /// <param name="wParam">其他的消息特定信息。</param>
+        /// <param name="lParam">其他的消息特定信息。</param>
+        /// <returns>如果函数成功，则返回值为正值。如果函数无法广播消息，则返回值为 –1。
+        /// 如果 dwFlags 参数 BSF_QUERY 且至少一个收件人 BROADCAST_QUERY_DENY 返回相应邮件，则返回值为零。 </returns>
         [DllImport(_dllName, CharSet = CharSet.Auto)]
-        public static extern IntPtr BroadcastSystemMessage();
+        public static extern int BroadcastSystemMessage(BSF flags, IntPtr lpInfo, uint Msg, [MarshalAs(UnmanagedType.SysUInt)] uint wParam, [MarshalAs(UnmanagedType.SysInt)] int lParam);
+
+        //TODO：未完成
 
         /// <summary>
         /// 将邮件发送到指定的收件人。 (BroadcastSystemMessageA)

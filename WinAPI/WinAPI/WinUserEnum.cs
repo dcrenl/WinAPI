@@ -47,7 +47,7 @@ namespace WinAPI
         KLF_SHIFTLOCK = 0x00010000,
 
         KLF_ACTIVATE = 0x00000001,
-        KLF_SUBSTITUTE_OK = 0x00000002        
+        KLF_SUBSTITUTE_OK = 0x00000002
     }
 
     /// <summary>
@@ -195,7 +195,7 @@ namespace WinAPI
         /// 该窗口具有垂直滚动条。
         /// </summary>
         WS_VSCROLL = 0x00200000,
-        
+
     }
 
     [Flags]
@@ -211,5 +211,101 @@ namespace WinAPI
         AW_SLIDE = 0x00040000,
         AW_BLEND = 0x00080000
     }
+
+    [Flags]
+    public enum MF : uint
+    {
+        /// <summary>
+        /// 使用位图作为菜单项。 lpNewItem 参数包含位图的句柄。
+        /// </summary>
+        MF_BITMAP = 0x00000004,
+        /// <summary>
+        /// 在菜单项旁边放置复选标记。 如果应用程序提供复选标记位图 (请参阅 SetMenuItemBitmaps，此标志会显示菜单项旁边的复选标记位图。
+        /// </summary>
+        MF_CHECKED = 0x00000008,
+        /// <summary>
+        /// 禁用菜单项，使其无法选中，但标志不会灰显。
+        /// </summary>
+        MF_DISABLED = 0x00000002,
+        /// <summary>
+        /// 启用菜单项，以便可以选择菜单项，并从其灰色状态还原它。
+        /// </summary>
+        MF_ENABLED = 0x00000000,
+        /// <summary>
+        /// 禁用菜单项并将其灰显，以便无法选择它。
+        /// </summary>
+        MF_GRAYED = 0x00000001,
+        /// <summary>
+        /// 与菜单栏 的MF_MENUBREAK 标志相同。 对于下拉菜单、子菜单或快捷菜单，新列与旧列之间将用一条竖线分隔。
+        /// </summary>
+        MF_MENUBARBREAK = 0x00000020,
+        /// <summary>
+        /// 将项放在菜单栏的新行 () 或 (的下拉菜单、子菜单或快捷菜单) 中，而不分隔列。
+        /// </summary>
+        MF_MENUBREAK = 0x00000040,
+        /// <summary>
+        /// 指定该项是所有者绘制的项。 首次显示菜单之前，拥有菜单的窗口会收到 WM_MEASUREITEM 消息以检索菜单项的宽度和高度。 然后 ，只要 必须更新菜单项的外观，WM_DRAWITEM消息就会发送到所有者窗口的窗口过程。
+        /// </summary>
+        MF_OWNERDRAW = 0x00000100,
+        /// <summary>
+        /// 指定菜单项打开下拉菜单或子菜单。 uIDNewItem 参数指定下拉菜单或子菜单的句柄。 此标志用于向菜单栏添加菜单名称，或将子菜单打开到下拉菜单、子菜单或快捷菜单的菜单项。
+        /// </summary>
+        MF_POPUP = 0x00000010,
+        /// <summary>
+        /// 绘制一条水平分割线。 此标志仅在下拉菜单、子菜单或快捷菜单中使用。 行不能灰显、禁用或突出显示。 忽略 lpNewItem 和 uIDNewItem 参数。
+        /// </summary>
+        MF_SEPARATOR = 0x00000800,
+        /// <summary>
+        /// 指定菜单项是文本字符串; lpNewItem 参数是指向字符串的指针。
+        /// </summary>
+        MF_STRING = 0x00000000,
+        /// <summary>
+        /// 不会在项旁边放置复选标记， (默认) 。 如果应用程序提供复选标记位图 (请参阅 SetMenuItemBitmaps) ，此标志会显示菜单项旁边的清除位图。
+        /// </summary>
+        MF_UNCHECKED = 0x00000000,
+    }
+
+    /// <summary>
+    /// dcrenl:2022-11-24 13:06:40
+    /// 标识线程、进程或窗口 (dpi) 设置的每英寸点数。
+    /// https://learn.microsoft.com/zh-cn/windows/win32/api/windef/ne-windef-dpi_awareness
+    /// </summary>
+    [Flags]
+    public enum DPI_AWARENESS : int
+    {
+        /// <summary>
+        /// DPI 感知无效。 这是无效的 DPI 感知值。
+        /// </summary>
+        DPI_AWARENESS_INVALID = -1,
+        /// <summary>
+        /// DPI 不知道。 此过程不会缩放 DPI 更改，并且始终假定其比例系数为 100%， (96 DPI) 。 系统会根据任何其他 DPI 设置自动缩放它。
+        /// </summary>
+        DPI_AWARENESS_UNAWARE = 0,
+        /// <summary>
+        /// 系统 DPI 感知。 此过程不会缩放 DPI 更改。 它将查询 DPI 一次，并在进程的生存期内使用该值。 
+        /// 如果 DPI 发生更改，该过程将不会调整为新的 DPI 值。 当 DPI 从系统值更改时，系统会自动纵向扩展或缩减它。
+        /// </summary>
+        DPI_AWARENESS_SYSTEM_AWARE = 1,
+        /// <summary>
+        /// 每个监视器 DPI 感知。 此过程会在创建 DPI 时检查 DPI，并在 DPI 发生更改时调整比例因子。 系统不会自动缩放这些进程。
+        /// </summary>
+        DPI_AWARENESS_PER_MONITOR_AWARE = 2
+    };
+
+    [Flags]
+    public enum BSF : uint
+    {
+        BSF_ALLOWSFW = 0x00000080,
+        BSF_FLUSHDISK = 0x00000004,
+        BSF_FORCEIFHUNG = 0x00000020,
+        BSF_IGNORECURRENTTASK = 0x00000002,
+        BSF_NOHANG = 0x00000008,
+        BSF_NOTIMEOUTIFNOTHUNG = 0x00000040,
+        BSF_POSTMESSAGE = 0x00000010,
+        BSF_QUERY = 0x00000001,
+        BSF_SENDNOTIFYMESSAGE = 0x00000100,
+        BSF_LUID = 0x00000400
+    }
+
     #endregion
 }
