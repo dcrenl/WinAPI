@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Drawing;
 using System.Runtime.InteropServices;
 
 namespace WinAPI
@@ -26,7 +27,7 @@ namespace WinAPI
         /// 0：在系统维护的已加载区域设置标识符的循环列表中选择以前的区域设置标识符。</param>
         /// <param name="Flags">指定如何激活输入区域设置标识符</param>
         /// <returns>返回值的类型为 HKL。 如果函数成功，则返回值为以前的输入区域设置标识符。 否则为零。</returns>
-        [DllImport(_dllName, CharSet = CharSet.Auto)]
+        [DllImport(_dllName, CharSet = CharSet.Auto)]//, CallingConvention = CallingConvention.StdCall
         public static extern IntPtr ActivateKeyboardLayout(IntPtr hkl, KLF Flags, string _dllName);
 
         /// <summary>
@@ -233,7 +234,7 @@ namespace WinAPI
         public static extern bool BringWindowToTop([In] IntPtr hWnd);
 
         /// <summary>
-        /// dcrenl:2022:11:25 10:19:53
+        /// dcrenl:2022-11-25 10:19:53
         /// 将邮件发送到指定的收件人。 (BroadcastSystemMessageW)
         /// 向指定收件人发送邮件。 收件人可以是应用程序、可安装驱动程序、网络驱动程序、系统级设备驱动程序或这些系统组件的任何组合。
         /// 若要在定义请求时接收其他信息，请使用 BroadcastSystemMessageEx 函数。
@@ -251,55 +252,125 @@ namespace WinAPI
         [DllImport(_dllName, CharSet = CharSet.Auto)]
         public static extern int BroadcastSystemMessage(BSF flags, IntPtr lpInfo, uint Msg, [MarshalAs(UnmanagedType.SysUInt)] uint wParam, [MarshalAs(UnmanagedType.SysInt)] int lParam);
 
-        //TODO：未完成
-
         /// <summary>
+        /// dcrenl:2022-11-25 16:05:27
         /// 将邮件发送到指定的收件人。 (BroadcastSystemMessageA)
+        /// https://learn.microsoft.com/zh-cn/windows/win32/api/winuser/nf-winuser-broadcastsystemmessagea
         /// </summary>
+        /// <param name="flags">广播选项。</param>
+        /// <param name="lpInfo">指向包含和接收有关邮件收件人信息的变量的指针。
+        /// 当函数返回时，此变量将接收这些值的组合，这些值标识哪些收件人实际接收了邮件。
+        /// 如果此参数为 NULL，则该函数将广播到所有组件。</param>
+        /// <param name="Msg">要发送的消息。 有关系统提供的消息的列表，请参阅 系统定义的消息。</param>
+        /// <param name="wParam">其他的消息特定信息。</param>
+        /// <param name="lParam">其他的消息特定信息。</param>
+        /// <returns>如果函数成功，则返回值为正值。如果函数无法广播消息，则返回值为 –1。
+        /// 如果 dwFlags 参数 BSF_QUERY 且至少一个收件人 BROADCAST_QUERY_DENY 返回相应邮件，则返回值为零。 </returns>
         [DllImport(_dllName, CharSet = CharSet.Auto)]
-        public static extern IntPtr BroadcastSystemMessageA();
+        public static extern int BroadcastSystemMessageA(BSF flags, IntPtr lpInfo, uint Msg, [MarshalAs(UnmanagedType.SysUInt)] uint wParam, [MarshalAs(UnmanagedType.SysInt)] int lParam);
 
         /// <summary>
+        /// dcrenl:2022-11-25 16:13:20
         /// 将邮件发送到指定的收件人。 (BroadcastSystemMessageExA)
+        /// https://learn.microsoft.com/zh-cn/windows/win32/api/winuser/nf-winuser-broadcastsystemmessageexa
         /// </summary>
+        /// <param name="flags">广播选项。</param>
+        /// <param name="lpInfo">指向包含和接收有关邮件收件人信息的变量的指针。
+        /// 当函数返回时，此变量将接收这些值的组合，这些值标识哪些收件人实际接收了邮件。
+        /// 如果此参数为 NULL，则该函数将广播到所有组件。</param>
+        /// <param name="Msg">要发送的消息。</param>
+        /// <param name="wParam">其他的消息特定信息。</param>
+        /// <param name="lParam">其他的消息特定信息。</param>
+        /// <param name="pbsmInfo">指向BSMINFO结构的指针，该结构包含请求被拒绝且dwFlags设置为BSF_QUERY 时的其他信息。</param>
+        /// <returns>如果函数成功，则返回值为正值。如果函数无法广播消息，则返回值为 –1。
+        /// 如果dwFlags参数为BSF_QUERY，并且至少有一个收件人返回了相应邮件BROADCAST_QUERY_DENY，则返回值为零。</returns>
         [DllImport(_dllName, CharSet = CharSet.Auto)]
-        public static extern IntPtr BroadcastSystemMessageExA();
+        public static extern int BroadcastSystemMessageExA(BSF flags, IntPtr lpInfo, uint Msg, [MarshalAs(UnmanagedType.SysUInt)] uint wParam, [MarshalAs(UnmanagedType.SysInt)] int lParam, ref BSMINFO pbsmInfo);
 
         /// <summary>
+        /// dcrenl:2022-11-25 16:16:44
         /// 将邮件发送到指定的收件人。 (BroadcastSystemMessageExW)
+        /// https://learn.microsoft.com/zh-cn/windows/win32/api/winuser/nf-winuser-broadcastsystemmessageexw
         /// </summary>
+        /// <param name="flags">广播选项。</param>
+        /// <param name="lpInfo">指向包含和接收有关邮件收件人信息的变量的指针。
+        /// 当函数返回时，此变量将接收这些值的组合，这些值标识哪些收件人实际接收了邮件。
+        /// 如果此参数为 NULL，则该函数将广播到所有组件。</param>
+        /// <param name="Msg">要发送的消息。</param>
+        /// <param name="wParam">其他的消息特定信息。</param>
+        /// <param name="lParam">其他的消息特定信息。</param>
+        /// <param name="pbsmInfo">指向BSMINFO结构的指针，该结构包含请求被拒绝且dwFlags设置为BSF_QUERY 时的其他信息。</param>
+        /// <returns>如果函数成功，则返回值为正值。如果函数无法广播消息，则返回值为 –1。
+        /// 如果dwFlags参数为BSF_QUERY，并且至少有一个收件人返回了相应邮件BROADCAST_QUERY_DENY，则返回值为零。</returns>
         [DllImport(_dllName, CharSet = CharSet.Auto)]
-        public static extern IntPtr BroadcastSystemMessageExW();
+        public static extern int BroadcastSystemMessageExW(BSF flags, IntPtr lpInfo, uint Msg, [MarshalAs(UnmanagedType.SysUInt)] uint wParam, [MarshalAs(UnmanagedType.SysInt)] int lParam, ref BSMINFO pbsmInfo);
 
         /// <summary>
+        /// dcrenl:2022-11-25 16:21:08
         /// 将邮件发送到指定的收件人。 (BroadcastSystemMessageW)
+        /// https://learn.microsoft.com/zh-cn/windows/win32/api/winuser/nf-winuser-broadcastsystemmessagew
         /// </summary>
+        /// <param name="flags">广播选项。</param>
+        /// <param name="lpInfo">指向包含和接收有关邮件收件人信息的变量的指针。
+        /// 当函数返回时，此变量将接收这些值的组合，这些值标识哪些收件人实际接收了邮件。
+        /// 如果此参数为 NULL，则该函数将广播到所有组件。</param>
+        /// <param name="Msg">要发送的消息。 有关系统提供的消息的列表，请参阅 系统定义的消息。</param>
+        /// <param name="wParam">其他的消息特定信息。</param>
+        /// <param name="lParam">其他的消息特定信息。</param>
+        /// <returns>如果函数成功，则返回值为正值。如果函数无法广播消息，则返回值为 –1。
+        /// 如果 dwFlags 参数 BSF_QUERY 且至少一个收件人 BROADCAST_QUERY_DENY 返回相应邮件，则返回值为零。 </returns>
         [DllImport(_dllName, CharSet = CharSet.Auto)]
-        public static extern IntPtr BroadcastSystemMessageW();
+        public static extern int BroadcastSystemMessageW(BSF flags, IntPtr lpInfo, uint Msg, [MarshalAs(UnmanagedType.SysUInt)] uint wParam, [MarshalAs(UnmanagedType.SysInt)] int lParam);
 
         /// <summary>
-        /// 使用指定的定位点、弹出窗口大小、标志和可选的排除矩形计算适当的弹出窗口位置。
+        /// dcrenl:2022-11-25 16:23:18
+        /// 使用指定的定位点、弹出窗口大小、标志和可选的排除矩形计算相应的弹出窗口位置。 
+        /// 当指定的弹出窗口大小小于桌面窗口大小时，请使用 CalculatePopupWindowPosition 函数来确保无论指定的定位点如何，弹出窗口在桌面窗口中完全可见。
+        /// https://learn.microsoft.com/zh-cn/windows/win32/api/winuser/nf-winuser-calculatepopupwindowposition
         /// </summary>
+        /// <param name="anchorPoint">指定的定位点。</param>
+        /// <param name="windowSize">指定的窗口大小。</param>
+        /// <param name="flags">使用以下标志之一指定函数如何水平和垂直定位弹出窗口。 标志与 TrackPopupMenuEx 函数的垂直和水平定位标志相同。</param>
+        /// <param name="excludeRect">指向指定排除矩形的结构的指针。 它可以为 NULL。</param>
+        /// <param name="popupWindowPosition">指向指定弹出窗口位置的结构的指针。</param>
+        /// <returns>如果函数成功，则返回 TRUE;否则，它将返回 FALSE。</returns>
         [DllImport(_dllName, CharSet = CharSet.Auto)]
-        public static extern IntPtr CalculatePopupWindowPosition();
+        public static extern IntPtr CalculatePopupWindowPosition(ref POINT anchorPoint, ref SIZE windowSize, uint flags, ref RECT excludeRect, out RECT popupWindowPosition);
+
 
         /// <summary>
+        /// dcrenl:2022-12-06 12:49:56
         /// 将指定的消息和挂钩代码传递给与WH_SYSMSGFILTER和WH_MSGFILTER挂钩关联的挂钩过程。 (ANSI)
+        /// https://learn.microsoft.com/zh-cn/windows/win32/api/winuser/nf-winuser-callmsgfiltera
         /// </summary>
+        /// <param name="lpMsg">指向包含要传递给挂钩过程的消息的 MSG 结构的指针。</param>
+        /// <param name="nCode">挂钩过程用来确定如何处理消息的应用程序定义代码。 代码不能与系统定义的挂钩代码具有相同的值， (MSGF_与 WH_SYSMSGFILTER 和WH_MSGFILTER挂钩关联的 HC_) 。</param>
+        /// <returns>如果应用程序应进一步处理消息，则返回值为零。 如果应用程序不应进一步处理消息，则返回值为非零。</returns>
         [DllImport(_dllName, CharSet = CharSet.Auto)]
-        public static extern IntPtr CallMsgFilterA();
+        [return: MarshalAs(UnmanagedType.Bool)]
+        public static extern bool CallMsgFilterA(MSG lpMsg, int nCode);
 
         /// <summary>
+        /// dcrenl:2022-12-06 12:56:50
         /// 将指定的消息和挂钩代码传递给与WH_SYSMSGFILTER和WH_MSGFILTER挂钩关联的挂钩过程。 (Unicode)
+        /// https://learn.microsoft.com/zh-cn/windows/win32/api/winuser/nf-winuser-callmsgfilterw
         /// </summary>
         [DllImport(_dllName, CharSet = CharSet.Auto)]
-        public static extern IntPtr CallMsgFilterW();
+        [return: MarshalAs(UnmanagedType.Bool)]
+        public static extern bool CallMsgFilterW(MSG lpMsg, int nCode);
 
         /// <summary>
+        /// dcrenl:2022-12-06 12:57:54
         /// 将挂钩信息传递到当前挂钩链中的下一个挂钩过程。 挂钩过程可以在处理挂钩信息之前或之后调用此函数。
+        /// https://learn.microsoft.com/zh-cn/windows/win32/api/winuser/nf-winuser-callnexthookex
         /// </summary>
+        /// <param name="hhk">HHOOK 忽略此参数。</param>
+        /// <param name="nCode">传递给当前挂钩过程的挂钩代码。 下一个挂钩过程使用此代码来确定如何处理挂钩信息。</param>
+        /// <param name="wParam">传递给当前挂钩过程的 wParam 值。 此参数的含义取决于与当前挂钩链关联的挂钩类型。</param>
+        /// <param name="lParam">传递给当前挂钩过程的 lParam 值。 此参数的含义取决于与当前挂钩链关联的挂钩类型。</param>
+        /// <returns>此值由链中的下一个挂钩过程返回。 当前挂钩过程还必须返回此值。 返回值的含义取决于挂钩类型。 有关详细信息，请参阅各个挂钩过程的说明。</returns>
         [DllImport(_dllName, CharSet = CharSet.Auto)]
-        public static extern IntPtr CallNextHookEx();
+        public static extern IntPtr CallNextHookEx(IntPtr hhk, int nCode,IntPtr wParam,IntPtr lParam);
 
         /// <summary>
         /// 将消息信息传递给指定的窗口过程。 (ANSI)
