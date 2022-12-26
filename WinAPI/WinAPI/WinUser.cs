@@ -370,37 +370,74 @@ namespace WinAPI
         /// <param name="lParam">传递给当前挂钩过程的 lParam 值。 此参数的含义取决于与当前挂钩链关联的挂钩类型。</param>
         /// <returns>此值由链中的下一个挂钩过程返回。 当前挂钩过程还必须返回此值。 返回值的含义取决于挂钩类型。 有关详细信息，请参阅各个挂钩过程的说明。</returns>
         [DllImport(_dllName, CharSet = CharSet.Auto)]
-        public static extern IntPtr CallNextHookEx(IntPtr hhk, int nCode,IntPtr wParam,IntPtr lParam);
+        public static extern IntPtr CallNextHookEx(IntPtr hhk, int nCode, IntPtr wParam, IntPtr lParam);
+
 
         /// <summary>
+        /// dcrenl:2022-12-26 10:59:31
         /// 将消息信息传递给指定的窗口过程。 (ANSI)
+        /// https://learn.microsoft.com/zh-cn/windows/win32/api/winuser/nf-winuser-callwindowproca
         /// </summary>
+        /// <param name="lpPrevWndFunc"></param>
+        /// <param name="hWnd"></param>
+        /// <param name="Msg"></param>
+        /// <param name="wParam"></param>
+        /// <param name="lParam"></param>
+        /// <returns></returns>
         [DllImport(_dllName, CharSet = CharSet.Auto)]
-        public static extern IntPtr CallWindowProcA();
+        public static extern IntPtr CallWindowProcA(WindowProc lpPrevWndFunc, IntPtr hWnd, uint Msg, IntPtr wParam, IntPtr lParam);
+
 
         /// <summary>
+        /// dcrenl:2022-12-26 11:13:20
         /// 将消息信息传递给指定的窗口过程。 (Unicode)
+        /// https://learn.microsoft.com/zh-cn/windows/win32/api/winuser/nf-winuser-callwindowprocw
         /// </summary>
+        /// <param name="lpPrevWndFunc"></param>
+        /// <param name="hWnd"></param>
+        /// <param name="Msg"></param>
+        /// <param name="wParam"></param>
+        /// <param name="lParam"></param>
+        /// <returns></returns>
         [DllImport(_dllName, CharSet = CharSet.Auto)]
-        public static extern IntPtr CallWindowProcW();
+        public static extern IntPtr CallWindowProcW(WindowProc lpPrevWndFunc, IntPtr hWnd, uint Msg, IntPtr wParam, IntPtr lParam);
 
         /// <summary>
+        /// dcrenl:2022-12-26 11:14:25
         /// 级联指定父窗口的指定子窗口。
+        /// https://learn.microsoft.com/zh-cn/windows/win32/api/winuser/nf-winuser-cascadewindows
         /// </summary>
+        /// <param name="hwndParent"></param>
+        /// <param name="wHow"></param>
+        /// <param name="lpRect"></param>
+        /// <param name="cKids"></param>
+        /// <param name="lpKids"></param>
+        /// <returns></returns>
         [DllImport(_dllName, CharSet = CharSet.Auto)]
-        public static extern IntPtr CascadeWindows();
+        public static extern ushort CascadeWindows([In] IntPtr hwndParent, uint wHow, [In] ref RECT lpRect, uint cKids, ref IntPtr lpKids);
 
         /// <summary>
+        /// dcrenl:2022-12-26 11:16:14
         /// 从剪贴板查看器链中删除指定的窗口。
+        /// https://learn.microsoft.com/zh-cn/windows/win32/api/winuser/nf-winuser-changeclipboardchain
         /// </summary>
+        /// <param name="hWndRemove"></param>
+        /// <param name="hWndNewNext"></param>
+        /// <returns></returns>
         [DllImport(_dllName, CharSet = CharSet.Auto)]
-        public static extern IntPtr ChangeClipboardChain();
+        [return: MarshalAs(UnmanagedType.Bool)]
+        public static extern bool ChangeClipboardChain(IntPtr hWndRemove, IntPtr hWndNewNext);
 
         /// <summary>
+        /// dcrenl:2022-12-26 11:17:48
         /// ChangeDisplaySettings 函数将默认显示设备的设置更改为指定的图形模式。 (ANSI)
+        /// https://learn.microsoft.com/zh-cn/windows/win32/api/winuser/nf-winuser-changedisplaysettingsa
         /// </summary>
+        /// <param name="lpDevMode"></param>
+        /// <param name="dwFlags"></param>
+        /// <returns></returns>
         [DllImport(_dllName, CharSet = CharSet.Auto)]
-        public static extern IntPtr ChangeDisplaySettingsA();
+        public static extern long ChangeDisplaySettingsA([In] ref DEVMODE lpDevMode, uint dwFlags);
 
         /// <summary>
         /// ChangeDisplaySettingsEx 函数将指定显示设备的设置更改为指定的图形模式。 (ANSI)
