@@ -54,7 +54,6 @@ namespace WinAPI
         [return: MarshalAs(UnmanagedType.Bool)]
         public static extern bool AdjustWindowRect(ref RECT lpRect, WS dwStyle, [MarshalAs(UnmanagedType.Bool)] bool bMenu);
 
-
         /// <summary>
         /// dcrenl:2022-11-24 13:06:40
         /// 根据客户端矩形的所需大小计算窗口矩形的所需大小。 然后，窗口矩形可以传递给 CreateWindowEx 函数，以创建其工作区为所需大小的窗口。
@@ -337,7 +336,6 @@ namespace WinAPI
         [DllImport(_dllName, CharSet = CharSet.Auto)]
         public static extern IntPtr CalculatePopupWindowPosition(ref POINT anchorPoint, ref SIZE windowSize, uint flags, ref RECT excludeRect, out RECT popupWindowPosition);
 
-
         /// <summary>
         /// dcrenl:2022-12-06 12:49:56
         /// 将指定的消息和挂钩代码传递给与WH_SYSMSGFILTER和WH_MSGFILTER挂钩关联的挂钩过程。 (ANSI)
@@ -372,7 +370,6 @@ namespace WinAPI
         [DllImport(_dllName, CharSet = CharSet.Auto)]
         public static extern IntPtr CallNextHookEx(IntPtr hhk, int nCode, IntPtr wParam, IntPtr lParam);
 
-
         /// <summary>
         /// dcrenl:2022-12-26 10:59:31
         /// 将消息信息传递给指定的窗口过程。 (ANSI)
@@ -386,7 +383,6 @@ namespace WinAPI
         /// <returns></returns>
         [DllImport(_dllName, CharSet = CharSet.Auto)]
         public static extern IntPtr CallWindowProcA(WindowProc lpPrevWndFunc, IntPtr hWnd, uint Msg, IntPtr wParam, IntPtr lParam);
-
 
         /// <summary>
         /// dcrenl:2022-12-26 11:13:20
@@ -440,22 +436,40 @@ namespace WinAPI
         public static extern long ChangeDisplaySettingsA([In] ref DEVMODE lpDevMode, uint dwFlags);
 
         /// <summary>
+        /// dcrenl:2022-12-26 11:29:55
         /// ChangeDisplaySettingsEx 函数将指定显示设备的设置更改为指定的图形模式。 (ANSI)
+        /// https://learn.microsoft.com/zh-cn/windows/win32/api/winuser/nf-winuser-changedisplaysettingsexa
         /// </summary>
+        /// <param name="lpszDeviceName"></param>
+        /// <param name="lpDevMode"></param>
+        /// <param name="hwnd"></param>
+        /// <param name="dwFlags"></param>
+        /// <param name="lParamm"></param>
+        /// <returns></returns>
         [DllImport(_dllName, CharSet = CharSet.Auto)]
-        public static extern IntPtr ChangeDisplaySettingsExA();
+        public static extern long ChangeDisplaySettingsExA([In] string lpszDeviceName, [In] ref DEVMODE lpDevMode, IntPtr hwnd, CDS dwFlags, [In] IntPtr lParamm);
 
         /// <summary>
+        /// dcrenl:2022-12-26 11:33:29
         /// ChangeDisplaySettingsEx 函数将指定显示设备的设置更改为指定的图形模式。 (Unicode)
+        /// https://learn.microsoft.com/zh-cn/windows/win32/api/winuser/nf-winuser-changedisplaysettingsexw
         /// </summary>
+        /// <param name="lpszDeviceName"></param>
+        /// <param name="lpDevMode"></param>
+        /// <param name="hwnd"></param>
+        /// <param name="dwFlags"></param>
+        /// <param name="lParamm"></param>
+        /// <returns></returns>
         [DllImport(_dllName, CharSet = CharSet.Auto)]
-        public static extern IntPtr ChangeDisplaySettingsExW();
+        public static extern long ChangeDisplaySettingsExW([In] string lpszDeviceName, [In] ref DEVMODE lpDevMode, IntPtr hwnd, CDS dwFlags, [In] IntPtr lParamm);
 
         /// <summary>
+        /// dcrenl:2022-12-26 11:37:10
         /// ChangeDisplaySettings 函数将默认显示设备的设置更改为指定的图形模式。 (Unicode)
+        /// https://learn.microsoft.com/zh-cn/windows/win32/api/winuser/nf-winuser-changedisplaysettingsw
         /// </summary>
         [DllImport(_dllName, CharSet = CharSet.Auto)]
-        public static extern IntPtr ChangeDisplaySettingsW();
+        public static extern long ChangeDisplaySettingsW([In] ref DEVMODE lpDevMode, CDS dwFlags);
 
         /// <summary>
         /// 在用户界面特权隔离(UIPI) 消息筛选器中添加或删除消息。
