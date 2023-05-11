@@ -1638,5 +1638,35 @@ namespace WinAPI
         CDS_NORESET = 0x10000000
     }
 
+    public enum ChangeFilterAction : uint
+    {
+        /// <summary>
+        /// 允许消息通过过滤器(包括来自低特权的进程)
+        /// </summary>
+        MSGFLT_ALLOW,
+
+        /// <summary>
+        /// 如果消息来自低特权的进程，阻止它转递给窗口
+        /// </summary>
+        MSGFLT_DISALLOW,
+
+        /// <summary>
+        /// 为窗口重置消息过滤器为默认
+        /// </summary>
+        MSGFLT_RESET
+
+    }
+
+    public enum ChangeFilterStatu : uint
+    {
+        MSGFLTINFO_NONE,
+
+        MSGFLTINFO_ALREADYALLOWED_FORWND,
+
+        MSGFLTINFO_ALREADYDISALLOWED_FORWND,
+
+        MSGFLTINFO_ALLOWED_HIGHER
+    }
+
     #endregion
 }

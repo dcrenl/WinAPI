@@ -195,6 +195,12 @@ namespace WinAPI
         public Int32 dmDisplayFrequency;
     }
 
+    [StructLayout(LayoutKind.Sequential)]
+    public struct ChangeFilterStruct
+    {
+        public uint CbSize;
+        public readonly ChangeFilterStatu ExtStatus;
+    }
 
     #endregion
 }

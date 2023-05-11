@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Drawing;
 using System.Runtime.InteropServices;
+using System.Text;
 
 namespace WinAPI
 {
@@ -472,28 +473,53 @@ namespace WinAPI
         public static extern long ChangeDisplaySettingsW([In] ref DEVMODE lpDevMode, CDS dwFlags);
 
         /// <summary>
-        /// 在用户界面特权隔离(UIPI) 消息筛选器中添加或删除消息。
+        /// dcrenl: 2023-05-11 13:36:07
+        /// [不建议使用 ChangeWindowMessageFilter 函数，因为它具有进程范围。 相反，请使用 ChangeWindowMessageFilterEx 函数根据需要控制对特定窗口的访问。 
+        /// 将来的 Windows 版本中可能不支持 ChangeWindowMessageFilter。
+        /// 在用户界面特权隔离 (UIPI) 消息筛选器中添加或删除消息。
+        /// https://learn.microsoft.com/zh-cn/windows/win32/api/winuser/nf-winuser-changewindowmessagefilter
         /// </summary>
+        /// <param name="message"></param>
+        /// <param name="dwFlag"></param>
+        /// <returns></returns>
         [DllImport(_dllName, CharSet = CharSet.Auto)]
-        public static extern IntPtr ChangeWindowMessageFilter();
+        [return: MarshalAs(UnmanagedType.Bool)]
+        public static extern bool ChangeWindowMessageFilter([In] uint message, [In] uint dwFlag);
 
         /// <summary>
+        /// dcrenl: 2023-05-11 13:37:59
         /// 修改指定窗口的用户界面特权隔离(UIPI) 消息筛选器。
+        /// https://learn.microsoft.com/zh-cn/windows/win32/api/winuser/nf-winuser-changewindowmessagefilterex
         /// </summary>
+        /// <param name="hWnd"></param>
+        /// <param name="message"></param>
+        /// <param name="action"></param>
+        /// <param name="pChangeFilterStruct"></param>
+        /// <returns></returns>
         [DllImport(_dllName, CharSet = CharSet.Auto)]
-        public static extern IntPtr ChangeWindowMessageFilterEx();
+        [return: MarshalAs(UnmanagedType.Bool)]
+        private static extern bool ChangeWindowMessageFilterEx(IntPtr hWnd, uint message, ChangeFilterAction action, in ChangeFilterStruct pChangeFilterStruct);
 
         /// <summary>
+        /// dcrenl: 2023-05-11 13:56:10
+        /// https://learn.microsoft.com/zh-cn/windows/win32/api/winuser/nf-winuser-charlowera
         /// 将字符串或单个字符转换为小写。 如果操作数是一个字符串，则函数将就地转换字符。 (ANSI)
         /// </summary>
+        /// <param name="lpsz"></param>
+        /// <returns></returns>
         [DllImport(_dllName, CharSet = CharSet.Auto)]
-        public static extern IntPtr CharLowerA();
+        public static extern StringBuilder CharLowerA([In,Out] StringBuilder lpsz);
 
         /// <summary>
+        /// dcrenl: 2023-05-11 14:13:57
         /// 将缓冲区中的大写字符转换为小写字符。 该函数将就地转换字符。 (ANSI)
+        /// https://learn.microsoft.com/zh-cn/windows/win32/api/winuser/nf-winuser-charlowerbuffa
         /// </summary>
+        /// <param name="lpsz"></param>
+        /// <param name="cchLength"></param>
+        /// <returns></returns>
         [DllImport(_dllName, CharSet = CharSet.Auto)]
-        public static extern IntPtr CharLowerBuffA();
+        public static extern WS CharLowerBuffA([In, Out] StringBuilder lpsz, WS cchLength);
 
         /// <summary>
         /// 将缓冲区中的大写字符转换为小写字符。 该函数将就地转换字符。 (Unicode)
